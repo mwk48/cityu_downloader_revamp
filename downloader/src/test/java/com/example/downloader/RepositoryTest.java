@@ -6,10 +6,10 @@ import com.example.downloader.models.NameCourse;
 import com.example.downloader.repositories.CourseRepository;
 import com.example.downloader.repositories.GroupCourseRepository;
 import com.example.downloader.repositories.NameCourseRepository;
+import com.example.downloader.utils.CourseUtils;
 import com.example.downloader.utils.ParseUtils;
 import jakarta.transaction.Transactional;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -87,27 +87,8 @@ class RepositoryTest {
     @BeforeAll
     void addCourses() throws FileNotFoundException {
         List<Course> courses = ParseUtils.getAllCourses(10);
-        for (var course : courses) {
-            String subject = course.getSubject();
-            String year = course.getYear();
-            String name = course.getName();
-
-            var groupCourse = groupCourseRepository.findBySubjectAndYear(subject, year).orElse(
-                GroupCourse.builder().subject(subject).year(year).courses(new ArrayList<>())
-                    .build());
-
-            var nameCourse = nameCourseRepository.findByName(name).orElse(
-                NameCourse.builder().name(name).courses(new ArrayList<>()).build());
-
-            var realCourse = courseRepository.save(course);
-            groupCourse.getCourses().add(realCourse);
-            nameCourse.getCourses().add(realCourse);
-            groupCourseRepository.save(groupCourse);
-            nameCourseRepository.save(nameCourse);
-            realCourse.setGroupCourse(groupCourse);
-            realCourse.setNameCourse(nameCourse);
-            courseRepository.save(realCourse);
-        }
+        CourseUtils.insertAllCourses(courses, courseRepository, groupCourseRepository,
+            nameCourseRepository);
     }
 
     static class Initializer implements
