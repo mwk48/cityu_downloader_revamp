@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/group-courses")
 public class GroupCourseController {
 
-    private GroupCourseService groupCourseService;
+    private final GroupCourseService groupCourseService;
 
     @Autowired
     public GroupCourseController(GroupCourseService groupCourseService) {
         this.groupCourseService = groupCourseService;
     }
 
-    @GetMapping(path="/courses", params = {"subject", "year"})
+    @GetMapping(path = "/courses", params = {"subject", "year"})
     public List<Course> getGroupCourses(@RequestParam("subject") String subject,
                                         @RequestParam("year") String year) {
         return groupCourseService.getAllCoursesBySubjectAndYear(subject, year);

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class NameCourseService {
 
-    private NameCourseRepository nameCourseRepository;
+    private final NameCourseRepository nameCourseRepository;
 
     @Autowired
     public NameCourseService(NameCourseRepository nameCourseRepository) {
@@ -19,7 +19,8 @@ public class NameCourseService {
 
     public List<Course> getAllCoursesByName(String name) {
         return nameCourseRepository.findByName(name).orElseThrow(
-                () -> new RuntimeException(String.format("NameCourse with name %s not found", name))).getCourses();
+                () -> new RuntimeException(String.format("NameCourse with name %s not found", name)))
+            .getCourses();
     }
 
     public List<NameCourse> getAllNameCourses() {

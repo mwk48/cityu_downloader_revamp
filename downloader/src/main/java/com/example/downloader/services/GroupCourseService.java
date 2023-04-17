@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class GroupCourseService {
 
-    private GroupCourseRepository groupCourseRepository;
+    private final GroupCourseRepository groupCourseRepository;
 
     @Autowired
     public GroupCourseService(GroupCourseRepository groupCourseRepository) {
@@ -19,7 +19,9 @@ public class GroupCourseService {
 
     public List<Course> getAllCoursesBySubjectAndYear(String subject, String year) {
         return groupCourseRepository.findBySubjectAndYear(subject, year).orElseThrow(
-                () -> new RuntimeException(String.format("GroupCourse with subject %s and year %s not found", subject, year))).getCourses();
+                () -> new RuntimeException(
+                    String.format("GroupCourse with subject %s and year %s not found", subject, year)))
+            .getCourses();
     }
 
     public List<GroupCourse> getAllGroupCourses() {

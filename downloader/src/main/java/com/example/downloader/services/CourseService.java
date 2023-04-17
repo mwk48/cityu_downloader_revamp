@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class CourseService {
 
 
-    private CourseRepository courseRepository;
+    private final CourseRepository courseRepository;
 
     @Autowired
     public CourseService(CourseRepository courseRepository) {
@@ -19,7 +19,7 @@ public class CourseService {
 
     public Course getCourseById(Long id) {
         return courseRepository.findById(id).orElseThrow(
-                () -> new RuntimeException(String.format("Course with id %d not found", id)));
+            () -> new RuntimeException(String.format("Course with id %d not found", id)));
     }
 
     public List<Course> getAllCourses() {

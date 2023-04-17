@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class CourseController {
 
 
-    private CourseService courseService;
+    private final CourseService courseService;
 
     @Autowired
     public CourseController(CourseService courseService) {
         this.courseService = courseService;
     }
 
-    @GetMapping(path ="/{id}")
+    @GetMapping(path = "/{id}")
     public Course getCourseById(@PathVariable("id") Long id) {
         return courseService.getCourseById(id);
     }

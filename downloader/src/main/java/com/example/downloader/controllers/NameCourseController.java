@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/name-courses")
 public class NameCourseController {
 
-    private NameCourseService nameCourseService;
+    private final NameCourseService nameCourseService;
 
     @Autowired
     public NameCourseController(NameCourseService nameCourseService) {
