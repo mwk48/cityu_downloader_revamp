@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class ParseUtils {
 
-    public static Course parseUrl(String url) {
+    private static Course parseUrl(String url) {
 
         var arr = url.split("/");
         String year = arr[arr.length - 3];
