@@ -18,33 +18,16 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.util.TestPropertyValues;
-import org.springframework.context.ApplicationContextInitializer;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Testcontainers
-@ContextConfiguration(initializers = {RepositoryTest.Initializer.class})
+@ContextConfiguration(initializers = {DBInitializer.class})
 class RepositoryTest {
-
-    @Container
-    public static PostgreSQLContainer postgres = new PostgreSQLContainer<>("postgres")
-        .withDatabaseName("test_downloader")
-        .withUsername("abc")
-        .withPassword("123");
-
-    static {
-        postgres.start();
-    }
 
     private final CourseRepository courseRepository;
     private final GroupCourseRepository groupCourseRepository;
@@ -71,39 +54,12 @@ class RepositoryTest {
         assert groupCourses.size() == 3;
     }
 
-    @Test
-    @Transactional
-    void testRelations() {
-        List<Course> courses = courseRepository.findAll();
-        List<NameCourse> nameCourses = nameCourseRepository.findAll();
-        List<GroupCourse> groupCourses = groupCourseRepository.findAll();
-        //System.out.println(courses.size());
-        assert courses.size() == 10;
-        assert nameCourses.size() == 9;
-        assert groupCourses.size() == 3;
-    }
-
-    @Transactional
     @BeforeAll
     void addCourses() throws FileNotFoundException {
+        System.out.println("Adding courses");
         List<Course> courses = ParseUtils.getAllCourses(10);
         CourseUtils.insertAllCourses(courses, courseRepository, groupCourseRepository,
             nameCourseRepository);
     }
 
-    static class Initializer implements
-        ApplicationContextInitializer<ConfigurableApplicationContext> {
-
-        @Override
-        public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
-
-            TestPropertyValues
-                .of("spring.datasource.url=" + postgres.getJdbcUrl(),
-                    "spring.datasource.username=" + postgres.getUsername(),
-                    "spring.datasource.password=" + postgres.getPassword())
-                .applyTo(configurableApplicationContext.getEnvironment());
-
-        }
-
-    }
 }
