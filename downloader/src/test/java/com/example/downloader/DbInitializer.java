@@ -4,20 +4,21 @@ import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
 
 
-public class DBInitializer
+public class DbInitializer
     implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
-    @Container
-    static PostgreSQLContainer postgres = new PostgreSQLContainer("postgres:14.7")
-        .withDatabaseName("test_downloader")
-        .withUsername("abc")
-        .withPassword("123");
+    static final PostgreSQLContainer postgres;
 
     static {
+        postgres = new PostgreSQLContainer("postgres:14.7")
+            .withDatabaseName("test_downloader")
+            .withUsername("abc")
+            .withPassword("123");
         postgres.start();
+
+
     }
 
     @Override
