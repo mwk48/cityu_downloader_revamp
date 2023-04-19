@@ -6,6 +6,7 @@ import com.example.downloader.models.NameCourse;
 import com.example.downloader.repositories.CourseRepository;
 import com.example.downloader.repositories.GroupCourseRepository;
 import com.example.downloader.repositories.NameCourseRepository;
+import jakarta.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
@@ -14,16 +15,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class InsertService {
+public class ModifyService {
 
-    private static final Logger logger = LoggerFactory.getLogger(InsertService.class);
+    private static final Logger logger = LoggerFactory.getLogger(ModifyService.class);
 
     public final CourseRepository courseRepository;
     public final GroupCourseRepository groupCourseRepository;
     public final NameCourseRepository nameCourseRepository;
 
     @Autowired
-    public InsertService(CourseRepository courseRepository,
+    public ModifyService(CourseRepository courseRepository,
                          GroupCourseRepository groupCourseRepository,
                          NameCourseRepository nameCourseRepository) {
         this.courseRepository = courseRepository;
@@ -57,5 +58,15 @@ public class InsertService {
             realCourse.setNameCourse(nameCourse);
             courseRepository.save(realCourse);
         }
+    }
+
+    @Transactional
+    public void deteleAllCourses() {
+        courseRepository.deleteAll();
+        groupCourseRepository.deleteAll();
+        nameCourseRepository.deleteAll();
+        courseRepository.alterSequenceToOne();
+        groupCourseRepository.alterSequenceToOne();
+        nameCourseRepository.alterSequenceToOne();
     }
 }

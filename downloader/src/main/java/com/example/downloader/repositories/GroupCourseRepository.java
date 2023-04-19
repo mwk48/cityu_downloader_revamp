@@ -5,6 +5,7 @@ import com.example.downloader.models.GroupCourse;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 public interface GroupCourseRepository extends JpaRepository<GroupCourse, Long> {
@@ -24,4 +25,8 @@ public interface GroupCourseRepository extends JpaRepository<GroupCourse, Long> 
 
     @Query("SELECT DISTINCT subject FROM GroupCourse order by subject asc")
     List<String> findAllSubjects();
+
+    @Query(value = "ALTER SEQUENCE group_course_id_seq RESTART WITH 1", nativeQuery = true)
+    @Modifying
+    void alterSequenceToOne();
 }

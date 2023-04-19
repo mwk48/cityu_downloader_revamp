@@ -2,7 +2,7 @@ package com.example.downloader.configs;
 
 import com.example.downloader.models.Course;
 import com.example.downloader.services.CourseService;
-import com.example.downloader.services.InsertService;
+import com.example.downloader.services.ModifyService;
 import com.example.downloader.utils.ParseUtils;
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -13,11 +13,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+
 @Component
 public class Initialization implements CommandLineRunner {
 
     private static final Logger logger = LoggerFactory.getLogger(Initialization.class);
-    private final InsertService insertService;
+    private final ModifyService modifyService;
 
     private final CourseService courseService;
 
@@ -26,8 +27,8 @@ public class Initialization implements CommandLineRunner {
     private Boolean importData;
 
     @Autowired
-    public Initialization(InsertService insertService, CourseService courseService) {
-        this.insertService = insertService;
+    public Initialization(ModifyService modifyService, CourseService courseService) {
+        this.modifyService = modifyService;
         this.courseService = courseService;
     }
 
@@ -45,6 +46,6 @@ public class Initialization implements CommandLineRunner {
             return;
         }
         List<Course> courses = ParseUtils.getAllCourses(Integer.MAX_VALUE);
-        insertService.insertCourses(courses);
+        modifyService.insertCourses(courses);
     }
 }

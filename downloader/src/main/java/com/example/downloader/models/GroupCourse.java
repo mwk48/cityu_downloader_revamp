@@ -34,8 +34,7 @@ public class GroupCourse {
     @SequenceGenerator(
         name = "group_course_id_seq",
         sequenceName = "group_course_id_seq",
-        allocationSize = 1,
-        initialValue = 1
+        allocationSize = 1
     )
     Long id;
 
