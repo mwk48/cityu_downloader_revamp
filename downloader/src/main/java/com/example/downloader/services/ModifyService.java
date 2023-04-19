@@ -61,7 +61,7 @@ public class ModifyService {
     }
 
     @Transactional
-    public void deteleAllCourses() {
+    public void deleteAllCourses() {
         courseRepository.deleteAll();
         groupCourseRepository.deleteAll();
         nameCourseRepository.deleteAll();

@@ -36,6 +36,6 @@ abstract class BaseDbTest {
     @AfterAll
     void deleteCourses() {
         System.out.println("Deleting courses");
-        modifyService.deteleAllCourses();
+        modifyService.deleteAllCourses();
     }
 }
