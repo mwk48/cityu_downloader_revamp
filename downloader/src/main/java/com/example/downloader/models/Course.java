@@ -1,6 +1,7 @@
 package com.example.downloader.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -34,8 +35,7 @@ public class Course {
     @SequenceGenerator(
         name = "course_id_seq",
         sequenceName = "course_id_seq",
-        allocationSize = 1,
-        initialValue = 1
+        allocationSize = 1
     )
     Long id;
 
@@ -54,11 +54,15 @@ public class Course {
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
     @JoinColumn(name = "name_course_id", referencedColumnName = "id")
+    @ToString.Exclude
+    @JsonIgnoreProperties("courses")
     NameCourse nameCourse;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
     @JoinColumn(name = "group_course_id", referencedColumnName = "id")
+    @ToString.Exclude
+    @JsonIgnoreProperties("courses")
     GroupCourse groupCourse;
 
     public void setGroupCourse(GroupCourse groupCourse) {
