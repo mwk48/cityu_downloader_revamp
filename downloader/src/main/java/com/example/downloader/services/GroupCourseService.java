@@ -30,13 +30,11 @@ public class GroupCourseService {
     }
 
     public List<String> getSubjects(String year) {
-        var courses = groupCourseRepository.findAllByYear(year);
-        return courses.stream().map(GroupCourse::getSubject).distinct().sorted().toList();
+        return groupCourseRepository.findSubjectsByYear(year);
     }
 
     public List<String> getYears(String subject) {
-        var courses = groupCourseRepository.findAllBySubject(subject);
-        return courses.stream().map(GroupCourse::getYear).distinct().sorted().toList();
+        return groupCourseRepository.findYearsBySubject(subject);
     }
 
     public List<String> getAllSubjects() {

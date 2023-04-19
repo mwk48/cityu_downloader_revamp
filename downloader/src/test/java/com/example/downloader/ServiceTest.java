@@ -110,6 +110,6 @@ class ServiceTest extends BaseDbTest {
         Assertions.assertEquals(course.getNameCourse().getId(), 1L);
 
     }
-
+    
 
 }

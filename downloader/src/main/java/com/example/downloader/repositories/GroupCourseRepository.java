@@ -16,9 +16,12 @@ public interface GroupCourseRepository extends JpaRepository<GroupCourse, Long> 
     @Query("SELECT c FROM Course c left join GroupCourse g on c.groupCourse.id = g.id WHERE g.id = ?1")
     List<Course> findAllCourses(Long id);
 
-    List<GroupCourse> findAllByYear(String year);
+    @Query("SELECT DISTINCT subject FROM GroupCourse WHERE year = ?1 order by subject asc")
+    List<String> findSubjectsByYear(String year);
 
-    List<GroupCourse> findAllBySubject(String subject);
+
+    @Query("SELECT DISTINCT year FROM GroupCourse WHERE subject = ?1 order by year asc")
+    List<String> findYearsBySubject(String subject);
 
     @Query("SELECT DISTINCT year FROM GroupCourse order by year asc")
     List<String> findAllYears();
