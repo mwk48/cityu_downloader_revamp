@@ -1,5 +1,6 @@
 package com.example.downloader.services;
 
+import com.example.downloader.exceptions.NotFoundException;
 import com.example.downloader.models.Course;
 import com.example.downloader.repositories.CourseRepository;
 import java.util.List;
@@ -19,7 +20,7 @@ public class CourseService {
 
     public Course getCourseById(Long id) {
         return courseRepository.findById(id).orElseThrow(
-            () -> new RuntimeException(String.format("Course with id %d not found", id)));
+            () -> new NotFoundException(String.format("Course with id %d not found", id)));
     }
 
     public List<Course> getAllCourses() {

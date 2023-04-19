@@ -1,5 +1,6 @@
 package com.example.downloader.services;
 
+import com.example.downloader.exceptions.NotFoundException;
 import com.example.downloader.models.Course;
 import com.example.downloader.models.GroupCourse;
 import com.example.downloader.repositories.GroupCourseRepository;
@@ -19,7 +20,7 @@ public class GroupCourseService {
 
     public List<Course> getAllCoursesBySubjectAndYear(String subject, String year) {
         return groupCourseRepository.findBySubjectAndYear(subject, year).orElseThrow(
-                () -> new RuntimeException(
+                () -> new NotFoundException(
                     String.format("GroupCourse with subject %s and year %s not found", subject, year)))
             .getCourses();
     }
