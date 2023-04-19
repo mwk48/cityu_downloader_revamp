@@ -26,4 +26,8 @@ public class NameCourseService {
     public List<NameCourse> getAllNameCourses() {
         return nameCourseRepository.findAll();
     }
+
+    public Long getNameCourseCount() {
+        return nameCourseRepository.count();
+    }
 }

@@ -45,4 +45,8 @@ public class GroupCourseService {
     public List<String> getAllYears() {
         return groupCourseRepository.findAllYears();
     }
+
+    public Long getGroupCourseCount() {
+        return groupCourseRepository.count();
+    }
 }
