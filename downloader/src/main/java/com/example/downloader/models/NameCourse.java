@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import java.io.Serializable;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,7 +25,7 @@ import lombok.ToString;
 @ToString
 @Getter
 @Builder
-public class NameCourse {
+public class NameCourse implements Serializable {
 
     @Id
     @GeneratedValue(
