@@ -8,16 +8,11 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
   datasource:
-    url: jdbc:postgresql://localhost:5433/downloader
+    url: jdbc:postgresql://postgres:5432/downloader
     username: postgres
   data:
     redis:
-      host: localhost
-      port: 6380
+      host: redis
+      port: 6379
       password:
       database: 0
-  cache:
-    type: redis
-    redis:
-      time-to-live: 1d
-      use-key-prefix: true

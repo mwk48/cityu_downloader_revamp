@@ -1,0 +1,40 @@
+version: "3.9"
+services:
+  postgres:
+    ports:
+      - "5433:5432"
+    container_name: postgres
+    user: postgres
+    image: postgres:14.7-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: downloader
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_HOST_AUTH_METHOD: trust
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+  redis:
+    ports:
+      - "6380:6379"
+    image: redis:6.0.9-alpine
+    container_name: redis
+    restart: always
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+  backend:
+    ports:
+      - "8080:8080"
+    build:
+      dockerfile: dev.Dockerfile
+      context: .
+    container_name: downloader-backend
+    profiles:
+      - dev
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      - "SPRING_PROFILES_ACTIVE=dev"
