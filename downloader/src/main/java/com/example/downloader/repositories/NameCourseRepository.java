@@ -4,11 +4,11 @@ import com.example.downloader.models.Course;
 import com.example.downloader.models.NameCourse;
 import java.util.List;
 import java.util.Optional;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
 
-public interface NameCourseRepository extends JpaRepository<NameCourse, Long> {
+public interface NameCourseRepository extends CrudRepository<NameCourse, Long> {
 
     Optional<NameCourse> findByName(String name);
 
@@ -18,4 +18,7 @@ public interface NameCourseRepository extends JpaRepository<NameCourse, Long> {
     @Query(value = "ALTER SEQUENCE name_course_id_seq RESTART WITH 1", nativeQuery = true)
     @Modifying
     void alterSequenceToOne();
+
+    @Override
+    List<NameCourse> findAll();
 }
