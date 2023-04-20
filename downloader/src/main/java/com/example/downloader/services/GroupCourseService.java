@@ -5,7 +5,6 @@ import com.example.downloader.models.Course;
 import com.example.downloader.models.GroupCourse;
 import com.example.downloader.repositories.GroupCourseRepository;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,7 +12,6 @@ public class GroupCourseService {
 
     private final GroupCourseRepository groupCourseRepository;
 
-    @Autowired
     public GroupCourseService(GroupCourseRepository groupCourseRepository) {
         this.groupCourseRepository = groupCourseRepository;
     }

@@ -5,6 +5,7 @@ import com.example.downloader.models.NameCourse;
 import com.example.downloader.services.NameCourseService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,11 +23,13 @@ public class NameCourseController {
     }
 
     @GetMapping(path = "/courses", params = {"name"})
+    @Cacheable(value = "name-courses", key = "#name")
     public List<Course> getGroupCourses(@RequestParam("name") String name) {
         return nameCourseService.getAllCoursesByName(name);
     }
 
     @GetMapping(path = "/all")
+    @Cacheable("name-courses-all")
     public List<NameCourse> getAllNameCourses() {
         return nameCourseService.getAllNameCourses();
     }
