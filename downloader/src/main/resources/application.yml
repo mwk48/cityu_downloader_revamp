@@ -7,6 +7,11 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+  cache:
+    type: redis
+    redis:
+      time-to-live: 1d
+      use-key-prefix: true
   datasource:
     url: jdbc:postgresql://localhost:5433/downloader
     username: postgres
@@ -16,8 +21,4 @@ spring:
       port: 6380
       password:
       database: 0
-  cache:
-    type: redis
-    redis:
-      time-to-live: 1d
-      use-key-prefix: true
+
