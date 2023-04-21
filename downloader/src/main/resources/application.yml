@@ -21,4 +21,7 @@ spring:
       port: 6380
       password:
       database: 0
-
+springdoc:
+  swagger-ui:
+    syntax-highlight:
+      activated: false
