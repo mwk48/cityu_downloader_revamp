@@ -2,6 +2,7 @@ package com.example.downloader.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -57,6 +58,7 @@ public class Course implements Serializable {
     @JoinColumn(name = "name_course_id", referencedColumnName = "id")
     @ToString.Exclude
     @JsonIgnoreProperties("courses")
+    @Schema(hidden = true)
     NameCourse nameCourse;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -64,6 +66,7 @@ public class Course implements Serializable {
     @JoinColumn(name = "group_course_id", referencedColumnName = "id")
     @ToString.Exclude
     @JsonIgnoreProperties("courses")
+    @Schema(hidden = true)
     GroupCourse groupCourse;
 
     public void setGroupCourse(GroupCourse groupCourse) {
