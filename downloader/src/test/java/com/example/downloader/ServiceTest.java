@@ -11,10 +11,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
 
 
-@ContextConfiguration(initializers = {DbInitializer.class})
 @Transactional
 class ServiceTest extends BaseDbTest {
 
@@ -36,7 +34,6 @@ class ServiceTest extends BaseDbTest {
         this.groupCourseService = groupCourseService;
         this.nameCourseService = nameCourseService;
     }
-
 
     @Test
     void testNumberOfCourses() {
@@ -110,6 +107,6 @@ class ServiceTest extends BaseDbTest {
         Assertions.assertEquals(course.getNameCourse().getId(), 1L);
 
     }
-    
+
 
 }
