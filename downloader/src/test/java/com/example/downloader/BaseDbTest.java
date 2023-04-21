@@ -59,7 +59,7 @@ abstract class BaseDbTest {
                 .withDatabaseName("test_downloader")
                 .withUsername("abc")
                 .withPassword("123");
-            redis = new GenericContainer("redis:6.0.9")
+            redis = new GenericContainer("redis:6.2.12-alpine")
                 .withExposedPorts(6379);
             postgres.start();
             redis.start();
