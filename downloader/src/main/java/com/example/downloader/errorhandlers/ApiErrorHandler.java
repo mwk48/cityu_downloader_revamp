@@ -1,8 +1,7 @@
 package com.example.downloader.errorhandlers;
 
+import com.example.downloader.exceptions.ApiException;
 import com.example.downloader.exceptions.NotFoundException;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -19,14 +18,14 @@ public class ApiErrorHandler extends ResponseEntityExceptionHandler {
         NotFoundException ex
     ) {
 
-        Map<String, Object> body = new ConcurrentHashMap<>();
+        ApiException apiException = ApiException.builder()
+            .message(ex.getMessage())
+            .timestamp(System.currentTimeMillis())
+            .status(HttpStatus.NOT_FOUND)
+            .throwable(ex)
+            .build();
 
-        body.put("message", ex.getMessage());
-        body.put("timestamp", System.currentTimeMillis());
-        body.put("status", HttpStatus.NOT_FOUND.value());
-
-
-        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(apiException, HttpStatus.NOT_FOUND);
     }
 
 }
