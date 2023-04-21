@@ -5,6 +5,7 @@ import com.example.downloader.models.Course;
 import com.example.downloader.models.GroupCourse;
 import com.example.downloader.repositories.GroupCourseRepository;
 import java.util.List;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,6 +17,7 @@ public class GroupCourseService {
         this.groupCourseRepository = groupCourseRepository;
     }
 
+    @Cacheable(value = "group-courses", key = "#subject + #year")
     public List<Course> getAllCoursesBySubjectAndYear(String subject, String year) {
         return groupCourseRepository.findBySubjectAndYear(subject, year).orElseThrow(
                 () -> new NotFoundException(
@@ -23,22 +25,27 @@ public class GroupCourseService {
             .getCourses();
     }
 
+    @Cacheable("group-courses-all")
     public List<GroupCourse> getAllGroupCourses() {
         return groupCourseRepository.findAll();
     }
 
+    @Cacheable(value = "subjects", key = "#year")
     public List<String> getSubjects(String year) {
         return groupCourseRepository.findSubjectsByYear(year);
     }
 
+    @Cacheable(value = "years", key = "#subject")
     public List<String> getYears(String subject) {
         return groupCourseRepository.findYearsBySubject(subject);
     }
 
+    @Cacheable("subjects-all")
     public List<String> getAllSubjects() {
         return groupCourseRepository.findAllSubjects();
     }
 
+    @Cacheable("years-all")
     public List<String> getAllYears() {
         return groupCourseRepository.findAllYears();
     }
