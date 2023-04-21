@@ -1,6 +1,7 @@
 package com.example.downloader.configs;
 
 import com.example.downloader.models.Course;
+import com.example.downloader.services.CacheService;
 import com.example.downloader.services.CourseService;
 import com.example.downloader.services.ModifyService;
 import com.example.downloader.utils.ParseUtils;
@@ -22,18 +23,26 @@ public class Initialization implements CommandLineRunner {
 
     private final CourseService courseService;
 
+    private final CacheService cacheService;
+
 
     @Value("${app.import-data:false}")
     private Boolean importData;
 
+    @Value("${app.clear-cache:false}")
+    private Boolean clearCache;
+
     @Autowired
-    public Initialization(ModifyService modifyService, CourseService courseService) {
+    public Initialization(ModifyService modifyService, CourseService courseService,
+                          CacheService cacheService) {
         this.modifyService = modifyService;
         this.courseService = courseService;
+        this.cacheService = cacheService;
     }
 
     @Override
     public void run(String... args) throws Exception {
+        clearAllCaches();
         insertCourses();
     }
 
@@ -47,5 +56,12 @@ public class Initialization implements CommandLineRunner {
         }
         List<Course> courses = ParseUtils.getAllCourses(Integer.MAX_VALUE);
         modifyService.insertCourses(courses);
+    }
+
+    private void clearAllCaches() {
+        logger.info("Clear cache: {}", clearCache);
+        if (clearCache) {
+            cacheService.clearAllCaches();
+        }
     }
 }

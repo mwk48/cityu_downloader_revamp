@@ -1,22 +1,21 @@
 package com.example.downloader.services;
 
-import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.cache.RedisCacheManager;
+import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CacheService {
 
-    private final RedisCacheManager cacheManager;
+    private final LettuceConnectionFactory lettuceConnectionFactory;
 
     @Autowired
-    public CacheService(RedisCacheManager cacheManager) {
-        this.cacheManager = cacheManager;
+    public CacheService(LettuceConnectionFactory lettuceConnectionFactory) {
+
+        this.lettuceConnectionFactory = lettuceConnectionFactory;
     }
 
     public void clearAllCaches() {
-        cacheManager.getCacheNames().forEach(cacheName -> Objects.requireNonNull(
-            cacheManager.getCache(cacheName)).clear());
+        lettuceConnectionFactory.getConnection().flushAll();
     }
 }
