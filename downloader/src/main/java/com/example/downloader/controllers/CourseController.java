@@ -32,6 +32,9 @@ public class CourseController {
         @ApiResponse(responseCode = "200", description = "OK", content = @Content(
             mediaType = "application/json",
             schema = @Schema(implementation = Course.class))),
+        @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content(
+            mediaType = "application/json",
+            schema = @Schema(implementation = ApiException.class))),
         @ApiResponse(responseCode = "404", description = "Not Found", content = @Content(
             mediaType = "application/json",
             schema = @Schema(implementation = ApiException.class)))
