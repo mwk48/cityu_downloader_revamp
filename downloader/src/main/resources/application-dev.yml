@@ -29,3 +29,4 @@ springdoc:
     tags-sorter: alpha
   override-with-generic-response: false
   writer-with-order-by-keys: true
+  show-actuator: true
