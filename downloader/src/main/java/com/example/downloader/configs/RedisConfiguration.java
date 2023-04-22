@@ -1,6 +1,5 @@
 package com.example.downloader.configs;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,7 +12,6 @@ public class RedisConfiguration {
 
     private final LettuceConnectionFactory lettuceConnectionFactory;
 
-    @Autowired
     public RedisConfiguration(LettuceConnectionFactory lettuceConnectionFactory) {
         this.lettuceConnectionFactory = lettuceConnectionFactory;
     }
